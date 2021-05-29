@@ -25,6 +25,7 @@ public class AlbumController {
 
 	@PostMapping(value = "/create")
 	public ResponseEntity<String> createAlbum(@RequestBody LinkedHashMap<String, String> map) {
+		String sessionToken = map.get("sessionToken");
 		String userIdStr = map.get("userId");
 		long userId;
 		if ((userIdStr == null) || userIdStr.trim().equals("")) {
@@ -32,7 +33,7 @@ public class AlbumController {
 		} else {
 			userId = Long.parseLong(userIdStr);
 		}
-		String message = uServ.createAlbum(map.get("albumName"), userId);
+		String message = uServ.createAlbum(userId, sessionToken, map.get("albumName"));
 		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
 
