@@ -24,10 +24,10 @@ public class AlbumService {
 
 	public String createAlbum(Long userId, String sessionToken, String albumName) {
 		try {
-			boolean validSession = userService.isValidSession(userId, sessionToken);
-			if (!validSession) {
-				return "Error: Album was not created. INVALID Session.";
-			}
+//			boolean validSession = userService.isValidSession(userId, sessionToken);
+//			if (!validSession) {
+//				return "Error: Album was not created. INVALID Session.";
+//			}
 			albumRepo.save(new Album(albumName, userId));
 			return "Album created successfully";
 		} catch (Exception e) {
