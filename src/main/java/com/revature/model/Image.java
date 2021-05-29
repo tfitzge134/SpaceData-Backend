@@ -21,7 +21,7 @@ public class Image {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long imageId;
 
-	@Column(name = "title", unique = true, nullable = false)
+	@Column(name = "title", unique = true, nullable = true)
 	private String title;
 
 	@Column(name = "media_type", unique = true, nullable = false)
@@ -36,7 +36,7 @@ public class Image {
 	@Column(name = "image_dt", nullable = false)
 	private Date imageDt;
 
-	@Column(name = "notes", unique = true, nullable = false)
+	@Column(name = "notes", unique = true, nullable = true)
 	private String notes;
 
 	@Column(name = "user_id", nullable = false)
@@ -49,7 +49,7 @@ public class Image {
 		super();
 	}
 
-	public Image(String title, Long userId, Long albumId, String mediaType, String url, String hdurl) {
+	public Image(String title, Long userId, Long albumId, String mediaType, String url, String hdurl,Date imageDt) {
 		super();
 		this.title = title;
 		this.mediaType = mediaType;
@@ -57,6 +57,7 @@ public class Image {
 		this.hdurl = hdurl;
 		this.userId = userId;
 		this.albumId = albumId;
+		this.imageDt = imageDt;
 	}
 
 	public Long getImageId() {

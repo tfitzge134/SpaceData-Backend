@@ -1,5 +1,7 @@
 package com.revature.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +25,13 @@ public class ImageService {
 	}
 
 	public String createImage(Long userId, String sessionToken, String title, Long albumId, String mediaType,
-			String url, String hdurl) {
+			String url, String hdurl, Date imageDt) {
 		try {
 //			boolean validSession = userService.isValidSession(userId, sessionToken);
 //			if (!validSession) {
 //				return "Error: Image was not created. INVALID Session.";
 //			}
-			Image image = new Image(title, userId, albumId, mediaType, url, hdurl);
+			Image image = new Image(title, userId, albumId, mediaType, url, hdurl, imageDt);
 			imageRepo.save(image);
 			return "Image created successfully";
 		} catch (Exception e) {

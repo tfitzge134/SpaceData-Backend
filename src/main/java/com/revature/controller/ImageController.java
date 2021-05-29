@@ -1,5 +1,6 @@
 package com.revature.controller;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +28,18 @@ public class ImageController {
 	public ResponseEntity<String> createImage(@RequestBody LinkedHashMap<String, String> map) {
 		String sessionToken = map.get("sessionToken");
 		String userIdStr = map.get("userId");
-		long userId;
-		if ((userIdStr == null) || userIdStr.trim().equals("")) {
-			userId = -1;
-		} else {
+		long userId = 0;
+		if ((userIdStr != null) && !userIdStr.trim().equals("")) {
 			userId = Long.parseLong(userIdStr);
 		}
 		String albumIdStr = map.get("albumId");
-		long albumId;
-		if ((albumIdStr == null) || albumIdStr.trim().equals("")) {
-			albumId = -1;
-		} else {
+		long albumId = 0;
+		if ((albumIdStr != null) && !albumIdStr.trim().equals("")) {
 			albumId = Long.parseLong(albumIdStr);
 		}
+		Date imageDt = new Date();
 		String message = uServ.createImage(userId, sessionToken, map.get("title"), albumId, map.get("mediaType"),
-				map.get("url"), map.get("hdurl"));
+				map.get("url"), map.get("hdurl"), imageDt);
 		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
 
