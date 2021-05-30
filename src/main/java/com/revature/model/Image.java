@@ -11,6 +11,12 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+
+/**
+ * 
+ * @author teresafitzgerald
+ *
+ */
 @Entity
 @Component
 @Table(name = "image")

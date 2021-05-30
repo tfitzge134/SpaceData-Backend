@@ -2,6 +2,12 @@ package com.revature.util;
 
 import java.util.UUID;
 
+
+/**
+ * 
+ * @author teresafitzgerald
+ *
+ */
 public class SessionUtil {
 
 	/**

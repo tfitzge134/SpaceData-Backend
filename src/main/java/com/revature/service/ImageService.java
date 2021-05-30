@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 import com.revature.model.Image;
 import com.revature.repository.ImageRepository;
 
+
+/**
+ * 
+ * @author teresafitzgerald
+ *
+ */
 @Service
 public class ImageService {
 

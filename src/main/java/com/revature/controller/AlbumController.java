@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.service.AlbumService;
 
+
+/**
+ * 
+ * @author teresafitzgerald
+ *
+ */
 @RestController
 @RequestMapping(value = "/album")
 public class AlbumController {

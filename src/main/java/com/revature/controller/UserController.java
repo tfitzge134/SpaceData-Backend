@@ -15,6 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.model.User;
 import com.revature.service.UserService;
 
+
+/**
+ * 
+ * @author teresafitzgerald
+ *
+ */
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {

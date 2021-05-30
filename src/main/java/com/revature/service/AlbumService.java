@@ -6,6 +6,12 @@ import org.springframework.stereotype.Service;
 import com.revature.model.Album;
 import com.revature.repository.AlbumRepository;
 
+
+/**
+ * 
+ * @author teresafitzgerald
+ *
+ */
 @Service
 public class AlbumService {
 

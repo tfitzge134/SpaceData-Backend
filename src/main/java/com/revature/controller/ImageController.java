@@ -15,6 +15,12 @@ import com.revature.model.Image;
 import com.revature.service.AlbumJunctionService;
 import com.revature.service.ImageService;
 
+
+/**
+ * 
+ * @author teresafitzgerald
+ *
+ */
 @RestController
 @RequestMapping(value = "/image")
 public class ImageController {

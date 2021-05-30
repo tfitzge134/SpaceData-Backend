@@ -10,6 +10,12 @@ import com.revature.model.User;
 import com.revature.repository.UserRepository;
 import com.revature.util.SessionUtil;
 
+
+/**
+ * 
+ * @author teresafitzgerald
+ *
+ */
 @Service
 public class UserService {
 

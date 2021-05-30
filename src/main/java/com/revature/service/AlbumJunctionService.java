@@ -6,6 +6,12 @@ import org.springframework.stereotype.Service;
 import com.revature.model.AlbumJunction;
 import com.revature.repository.AlbumJunctionRepository;
 
+
+/**
+ * 
+ * @author teresafitzgerald
+ *
+ */
 @Service
 public class AlbumJunctionService {
 
