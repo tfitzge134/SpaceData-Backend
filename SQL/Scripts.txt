@@ -253,6 +253,7 @@ CREATE TABLE spaceapi.tag_junction
     image_id integer NOT NULL,
     id integer NOT NULL DEFAULT nextval('spaceapi.tag_junction_id_seq'::regclass),
     CONSTRAINT tag_junction_pkey PRIMARY KEY (id),
+    CONSTRAINT tag_junction_image_tag_unique UNIQUE (tag_id, image_id),
     CONSTRAINT tag_junction_image_id_fkey FOREIGN KEY (image_id)
         REFERENCES spaceapi.image (image_id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -267,8 +268,8 @@ CREATE TABLE spaceapi.tag_junction
 TABLESPACE pg_default;
 
 ALTER TABLE spaceapi.tag_junction
-    OWNER to postgres;    
-        
+    OWNER to postgres;
+    
 -- Table: spaceapi.user
 
 -- DROP TABLE spaceapi."user";
