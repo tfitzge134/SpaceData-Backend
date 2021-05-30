@@ -234,7 +234,8 @@ CREATE TABLE spaceapi.tag
 (
     tag_id integer NOT NULL DEFAULT nextval('spaceapi.tag_tag_id_seq'::regclass),
     tag_name character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT tag_pkey PRIMARY KEY (tag_id)
+    CONSTRAINT tag_pkey PRIMARY KEY (tag_id),
+    CONSTRAINT "tag_tagName_unique" UNIQUE (tag_name)
 )
 
 TABLESPACE pg_default;
