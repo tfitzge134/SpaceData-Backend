@@ -1,0 +1,285 @@
+
+-----SEQUENCES-----
+
+-- SEQUENCE: spaceapi.album_album_id_seq
+
+-- DROP SEQUENCE spaceapi.album_album_id_seq;
+
+CREATE SEQUENCE spaceapi.album_album_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+ALTER SEQUENCE spaceapi.album_album_id_seq
+    OWNER TO postgres;
+    
+-- SEQUENCE: spaceapi.cosmo_user_user_id_seq
+
+-- DROP SEQUENCE spaceapi.cosmo_user_user_id_seq;
+
+CREATE SEQUENCE spaceapi.cosmo_user_user_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+ALTER SEQUENCE spaceapi.cosmo_user_user_id_seq
+    OWNER TO postgres;
+    
+-- SEQUENCE: spaceapi.cosmo_user_user_id_seq1
+
+-- DROP SEQUENCE spaceapi.cosmo_user_user_id_seq1;
+
+CREATE SEQUENCE spaceapi.cosmo_user_user_id_seq1
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+ALTER SEQUENCE spaceapi.cosmo_user_user_id_seq1
+    OWNER TO postgres;
+    
+-- SEQUENCE: spaceapi.image_image_id_seq
+
+-- DROP SEQUENCE spaceapi.image_image_id_seq;
+
+CREATE SEQUENCE spaceapi.image_image_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+ALTER SEQUENCE spaceapi.image_image_id_seq
+    OWNER TO postgres;
+    
+-- SEQUENCE: spaceapi.rating_rating_id_seq
+
+-- DROP SEQUENCE spaceapi.rating_rating_id_seq;
+
+CREATE SEQUENCE spaceapi.rating_rating_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+ALTER SEQUENCE spaceapi.rating_rating_id_seq
+    OWNER TO postgres;
+    
+-- SEQUENCE: spaceapi.role_role_id_seq
+
+-- DROP SEQUENCE spaceapi.role_role_id_seq;
+
+CREATE SEQUENCE spaceapi.role_role_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+ALTER SEQUENCE spaceapi.role_role_id_seq
+    OWNER TO postgres;
+    
+-- SEQUENCE: spaceapi.tag_tag_id_seq
+
+-- DROP SEQUENCE spaceapi.tag_tag_id_seq;
+
+CREATE SEQUENCE spaceapi.tag_tag_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+ALTER SEQUENCE spaceapi.tag_tag_id_seq
+    OWNER TO postgres;
+    
+-- SEQUENCE: spaceapi.user_id
+
+-- DROP SEQUENCE spaceapi.user_id;
+
+CREATE SEQUENCE spaceapi.user_id
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE spaceapi.user_id
+    OWNER TO postgres;
+    
+
+-----TABLES-----
+
+-- Table: spaceapi.album
+
+-- DROP TABLE spaceapi.album;
+
+CREATE TABLE spaceapi.album
+(
+    album_id integer NOT NULL DEFAULT nextval('spaceapi.album_album_id_seq'::regclass),
+    album_name character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    user_id integer NOT NULL,
+    CONSTRAINT album_pkey PRIMARY KEY (album_id),
+    CONSTRAINT albumname_unique UNIQUE (album_name),
+    CONSTRAINT user_id_fk FOREIGN KEY (user_id)
+        REFERENCES spaceapi."user" (userid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE spaceapi.album
+    OWNER to postgres;
+    
+-- Table: spaceapi.album_junction
+
+-- DROP TABLE spaceapi.album_junction;
+
+CREATE TABLE spaceapi.album_junction
+(
+    album_id integer NOT NULL,
+    image_date date NOT NULL,
+    CONSTRAINT album_junction_album_id_fkey FOREIGN KEY (album_id)
+        REFERENCES spaceapi.album (album_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE spaceapi.album_junction
+    OWNER to postgres;
+    
+-- Table: spaceapi.image
+
+-- DROP TABLE spaceapi.image;
+
+CREATE TABLE spaceapi.image
+(
+    image_id integer NOT NULL DEFAULT nextval('spaceapi.image_image_id_seq'::regclass),
+    title character varying(100) COLLATE pg_catalog."default",
+    media_type character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    url character varying(255) COLLATE pg_catalog."default",
+    hdurl character varying(255) COLLATE pg_catalog."default",
+    image_dt date,
+    notes character varying(50) COLLATE pg_catalog."default",
+    album_id integer NOT NULL,
+    user_id integer NOT NULL,
+    CONSTRAINT image_pkey PRIMARY KEY (image_id),
+    CONSTRAINT album_fk FOREIGN KEY (album_id)
+        REFERENCES spaceapi.album (album_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT user_fk FOREIGN KEY (user_id)
+        REFERENCES spaceapi."user" (userid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE spaceapi.image
+    OWNER to postgres;
+    
+-- Table: spaceapi.rating
+
+-- DROP TABLE spaceapi.rating;
+
+CREATE TABLE spaceapi.rating
+(
+    rating_id integer NOT NULL DEFAULT nextval('spaceapi.rating_rating_id_seq'::regclass),
+    rating_value numeric(1,0) NOT NULL,
+    image_date date NOT NULL,
+    user_id integer NOT NULL,
+    CONSTRAINT rating_pkey PRIMARY KEY (rating_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE spaceapi.rating
+    OWNER to postgres;
+    
+-- Table: spaceapi.role
+
+-- DROP TABLE spaceapi.role;
+
+CREATE TABLE spaceapi.role
+(
+    role_id integer NOT NULL DEFAULT nextval('spaceapi.role_role_id_seq'::regclass),
+    role_name character varying(20) COLLATE pg_catalog."default",
+    CONSTRAINT role_pkey PRIMARY KEY (role_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE spaceapi.role
+    OWNER to postgres;
+    
+-- Table: spaceapi.tag
+
+-- DROP TABLE spaceapi.tag;
+
+CREATE TABLE spaceapi.tag
+(
+    tag_id integer NOT NULL DEFAULT nextval('spaceapi.tag_tag_id_seq'::regclass),
+    tag_name character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT tag_pkey PRIMARY KEY (tag_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE spaceapi.tag
+    OWNER to postgres;
+    
+-- Table: spaceapi.tag_junction
+
+-- DROP TABLE spaceapi.tag_junction;
+
+CREATE TABLE spaceapi.tag_junction
+(
+    tag_id integer NOT NULL,
+    CONSTRAINT tag_junction_tag_id_fkey FOREIGN KEY (tag_id)
+        REFERENCES spaceapi.tag (tag_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE spaceapi.tag_junction
+    OWNER to postgres;
+    
+-- Table: spaceapi.user
+
+-- DROP TABLE spaceapi."user";
+
+CREATE TABLE spaceapi."user"
+(
+    userid integer NOT NULL DEFAULT nextval('spaceapi.cosmo_user_user_id_seq1'::regclass),
+    username character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    first_name character varying(20) COLLATE pg_catalog."default",
+    last_name character varying(20) COLLATE pg_catalog."default",
+    password character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    role_id integer,
+    logged_on boolean,
+    session_token character varying(128) COLLATE pg_catalog."default",
+    CONSTRAINT cosmo_user_pkey1 PRIMARY KEY (userid),
+    CONSTRAINT cosmo_user_username_key1 UNIQUE (username)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE spaceapi."user"
+    OWNER to postgres;
+    
+    
