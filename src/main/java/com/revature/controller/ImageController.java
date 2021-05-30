@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.model.Image;
+import com.revature.service.AlbumJunctionService;
 import com.revature.service.ImageService;
 
 @RestController
@@ -18,14 +20,16 @@ import com.revature.service.ImageService;
 public class ImageController {
 
 	private ImageService uServ;
+	private AlbumJunctionService albJunServ;
 
 	@Autowired
-	public ImageController(ImageService serv) {
+	public ImageController(ImageService serv, AlbumJunctionService albJunServ) {
 		this.uServ = serv;
+		this.albJunServ = albJunServ;
 	}
 
 	@PostMapping(value = "/create")
-	public ResponseEntity<String> createImage(@RequestBody LinkedHashMap<String, String> map) {
+	public ResponseEntity<Image> createImage(@RequestBody LinkedHashMap<String, String> map) {
 		String sessionToken = map.get("sessionToken");
 		String userIdStr = map.get("userId");
 		long userId = 0;
@@ -38,9 +42,13 @@ public class ImageController {
 			albumId = Long.parseLong(albumIdStr);
 		}
 		Date imageDt = new Date();
-		String message = uServ.createImage(userId, sessionToken, map.get("title"), albumId, map.get("mediaType"),
-				map.get("url"), map.get("hdurl"), imageDt);
-		return new ResponseEntity<String>(message, HttpStatus.OK);
+		Image image = uServ.createImage(userId, sessionToken, map.get("title"), map.get("mediaType"), map.get("url"),
+				map.get("hdurl"), imageDt);
+		if (image != null) {
+			Long imageId = image.getImageId();
+			albJunServ.createAlbumJunction(userId, sessionToken, albumId, imageId);
+		}
+		return new ResponseEntity<Image>(image, HttpStatus.OK);
 	}
 
 }

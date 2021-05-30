@@ -42,21 +42,17 @@ public class Image {
 	@Column(name = "user_id", nullable = false)
 	private Long userId;
 
-	@Column(name = "album_id", nullable = false)
-	private Long albumId;
-
 	public Image() {
 		super();
 	}
 
-	public Image(String title, Long userId, Long albumId, String mediaType, String url, String hdurl,Date imageDt) {
+	public Image(String title, Long userId, String mediaType, String url, String hdurl, Date imageDt) {
 		super();
 		this.title = title;
 		this.mediaType = mediaType;
 		this.url = url;
 		this.hdurl = hdurl;
 		this.userId = userId;
-		this.albumId = albumId;
 		this.imageDt = imageDt;
 	}
 
@@ -124,19 +120,10 @@ public class Image {
 		this.userId = userId;
 	}
 
-	public Long getAlbumId() {
-		return albumId;
-	}
-
-	public void setAlbumId(Long albumId) {
-		this.albumId = albumId;
-	}
-
 	@Override
 	public String toString() {
 		return "Image [imageId=" + imageId + ", title=" + title + ", mediaType=" + mediaType + ", url=" + url
-				+ ", hdurl=" + hdurl + ", imageDt=" + imageDt + ", notes=" + notes + ", userId=" + userId + ", albumId="
-				+ albumId + "]";
+				+ ", hdurl=" + hdurl + ", imageDt=" + imageDt + ", notes=" + notes + ", userId=" + userId + "]";
 	}
 
 }

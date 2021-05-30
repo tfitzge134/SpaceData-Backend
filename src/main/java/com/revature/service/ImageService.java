@@ -24,19 +24,21 @@ public class ImageService {
 		this.userService = userService;
 	}
 
-	public String createImage(Long userId, String sessionToken, String title, Long albumId, String mediaType,
-			String url, String hdurl, Date imageDt) {
+	public Image createImage(Long userId, String sessionToken, String title, String mediaType, String url, String hdurl,
+			Date imageDt) {
 		try {
 //			boolean validSession = userService.isValidSession(userId, sessionToken);
 //			if (!validSession) {
 //				return "Error: Image was not created. INVALID Session.";
 //			}
-			Image image = new Image(title, userId, albumId, mediaType, url, hdurl, imageDt);
+			Image image = new Image(title, userId, mediaType, url, hdurl, imageDt);
 			imageRepo.save(image);
-			return "Image created successfully";
+			return image;
+//			return "Image created successfully";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "Error: Image was not created";
+//			return "Error: Image was not created";
+			return null;
 		}
 	}
 

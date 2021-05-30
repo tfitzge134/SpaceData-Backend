@@ -146,11 +146,18 @@ ALTER TABLE spaceapi.album
 CREATE TABLE spaceapi.album_junction
 (
     album_id integer NOT NULL,
-    image_date date NOT NULL,
+    image_id integer NOT NULL,
+    id integer NOT NULL DEFAULT nextval('spaceapi.album_junction_id_seq'::regclass),
+    CONSTRAINT album_junction_pkey PRIMARY KEY (id),
     CONSTRAINT album_junction_album_id_fkey FOREIGN KEY (album_id)
         REFERENCES spaceapi.album (album_id) MATCH SIMPLE
         ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT album_junction_image_id_fkey FOREIGN KEY (image_id)
+        REFERENCES spaceapi.image (image_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
         ON DELETE NO ACTION
+        NOT VALID
 )
 
 TABLESPACE pg_default;
@@ -158,7 +165,6 @@ TABLESPACE pg_default;
 ALTER TABLE spaceapi.album_junction
     OWNER to postgres;
     
-
 -- Table: spaceapi.image
 
 -- DROP TABLE spaceapi.image;
@@ -244,6 +250,8 @@ CREATE TABLE spaceapi.tag_junction
 (
     tag_id integer NOT NULL,
     image_id integer NOT NULL,
+    id integer NOT NULL DEFAULT nextval('spaceapi.tag_junction_id_seq'::regclass),
+    CONSTRAINT tag_junction_pkey PRIMARY KEY (id),
     CONSTRAINT tag_junction_image_id_fkey FOREIGN KEY (image_id)
         REFERENCES spaceapi.image (image_id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -258,8 +266,8 @@ CREATE TABLE spaceapi.tag_junction
 TABLESPACE pg_default;
 
 ALTER TABLE spaceapi.tag_junction
-    OWNER to postgres;
-    
+    OWNER to postgres;    
+        
 -- Table: spaceapi.user
 
 -- DROP TABLE spaceapi."user";
