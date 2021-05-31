@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  */
 @Entity
 @Component
-@Table(name = "user")
+@Table(name = "spaceapi_user")
 public class User {
 
 	@Id

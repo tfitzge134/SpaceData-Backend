@@ -10,7 +10,6 @@ import com.revature.model.User;
 import com.revature.repository.UserRepository;
 import com.revature.util.SessionUtil;
 
-
 /**
  * 
  * @author teresafitzgerald
@@ -30,51 +29,56 @@ public class UserService {
 		this.uRepo = repo;
 	}
 
-	public String registerUser(String username, String password) {
+	public User registerUser(String username, String password) {
 		try {
-			uRepo.save(new User(username, password));
-			return "User created successfully";
+			User userCreated = uRepo.save(new User(username, password));
+//			return "User created successfully";
+			return userCreated;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "Error: User was not created";
+//			return "Error: User was not created";
+			return null;
 		}
 	}
 
-	public String loginUsername(String username, String password) {
+	public User loginUsername(String username, String password) {
 		try {
 			User loggedIn = uRepo.findUserByUsernameAndPassword(username, password);
 			if (loggedIn == null) {
-				return "User login failed";
+				return null;
+//				return "User login failed";
 			} else {
-				String sessionToken =SessionUtil.createSessionToken();
+				String sessionToken = SessionUtil.createSessionToken();
 				loggedIn.setSessionToken(sessionToken);
 				loggedIn.setLoggedOn(true);
 				uRepo.save(loggedIn);
-				return "User logged in successfully";
+				return loggedIn;
+//				return "User logged in successfully";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "User login failed";
+//			return "User login failed";
+			return null;
 		}
 	}
 
-	public String logoutUsername(String username) {
+	public boolean logoutUsername(String username) {
 		try {
 			User loggedIn = uRepo.findUserByUsername(username);
-			if (loggedIn == null) {
-				return "User already logged out.";
-			} else {
+			if (loggedIn != null) {
 				loggedIn.setSessionToken(null);
 				loggedIn.setLoggedOn(false);
 				uRepo.save(loggedIn);
-				return "User logged out successfully.";
+//				return "User logged out successfully.";
+
 			}
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "User login failed";
+//			return "User login failed";
+			return false;
 		}
 	}
-
 
 	public boolean isValidSession(Long userId, String sessionToken) {
 		Optional<User> found = uRepo.findById(userId);
@@ -85,7 +89,7 @@ public class UserService {
 		}
 		return validSession;
 	}
-	
+
 	public User searchUsers(String username) {
 		try {
 			return uRepo.findUserByUsername(username);
@@ -103,8 +107,4 @@ public class UserService {
 			return null;
 		}
 	}
-	
-//	public List<User> getLoggedOnUsers(){
-//		return uRepo.findAllLoggedOnUsers();
-//	}
 }

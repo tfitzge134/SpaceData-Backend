@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Entity
 @Component
-@Table(name = "image")
+@Table(name = "spaceapi_image")
 public class Image {
 
 	@Id

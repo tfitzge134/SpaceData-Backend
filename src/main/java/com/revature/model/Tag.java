@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Entity
 @Component
-@Table(name = "tag")
+@Table(name = "spaceapi_tag")
 public class Tag {
 
 	@Id

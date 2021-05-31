@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.model.User;
 import com.revature.service.UserService;
 
-
 /**
  * 
  * @author teresafitzgerald
@@ -33,21 +32,21 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/register")
-	public ResponseEntity<String> registerUser(@RequestBody LinkedHashMap<String, String> uMap) {
-		String message = uServ.registerUser(uMap.get("username"), uMap.get("password"));
-		return new ResponseEntity<String>(message, HttpStatus.OK);
+	public ResponseEntity<User> registerUser(@RequestBody LinkedHashMap<String, String> uMap) {
+		User user = uServ.registerUser(uMap.get("username"), uMap.get("password"));
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/login")
-	public ResponseEntity<String> loginUser(@RequestBody LinkedHashMap<String, String> uMap) {
-		String message = uServ.loginUsername(uMap.get("username"), uMap.get("password"));
-		return new ResponseEntity<String>(message, HttpStatus.OK);
+	public ResponseEntity<User> loginUser(@RequestBody LinkedHashMap<String, String> uMap) {
+		User user = uServ.loginUsername(uMap.get("username"), uMap.get("password"));
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/logout")
 	public ResponseEntity<String> logoutUser(@RequestBody LinkedHashMap<String, String> uMap) {
-		String message = uServ.logoutUsername(uMap.get("username"));
-		return new ResponseEntity<String>(message, HttpStatus.OK);
+		boolean result = uServ.logoutUsername(uMap.get("username"));
+		return new ResponseEntity<String>(result + "", HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/searchUser")

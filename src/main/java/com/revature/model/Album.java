@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  */
 @Entity
 @Component
-@Table(name = "album")
+@Table(name = "spaceapi_album")
 public class Album {
 
 	@Id
