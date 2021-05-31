@@ -127,6 +127,16 @@ public class UserService {
 		}
 	}
 
+
+	public User findUserSession(String username, String sessionToken) {
+		try {
+			return uRepo.findUserByUsernameAndSessionToken(username, sessionToken);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public List<User> getLoggedOnUsers() {
 		try {
 			return uRepo.findUserByLoggedOn(true);

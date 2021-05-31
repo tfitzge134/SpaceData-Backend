@@ -74,8 +74,12 @@ public class UserController {
 
 	@PostMapping(value = "/search")
 	public ResponseEntity<User> searchUser(@RequestBody LinkedHashMap<String, String> uMap) {
-		User retrieved = uServ.searchUsers(uMap.get("username"));
-		return new ResponseEntity<User>(retrieved, HttpStatus.OK);
+		User sessionUser = uServ.findUserSession(uMap.get("loggedInUsername"), uMap.get("sessionToken"));
+		if (sessionUser == null) {
+			return null;
+		}
+		User searchedUser = uServ.searchUsers(uMap.get("searchUsername"));
+		return new ResponseEntity<User>(searchedUser, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/loggedOn")
