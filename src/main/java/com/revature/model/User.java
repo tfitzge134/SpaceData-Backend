@@ -9,7 +9,6 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
-
 /**
  * 
  * @author teresafitzgerald
@@ -25,8 +24,17 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name = "role_id")
+	private Long roleId;
+
 	@Column(name = "username", unique = true, nullable = false)
 	private String username;
+
+	@Column(name = "first_name", nullable = true)
+	private String firstName;
+
+	@Column(name = "last_name", nullable = true)
+	private String lastName;
 
 	@Column(name = "password", nullable = false)
 	private String password;
@@ -41,10 +49,9 @@ public class User {
 		super();
 	}
 
-	public User(String username, String password) {
+	public User(String username) {
 		super();
 		this.username = username;
-		this.password = password;
 	}
 
 	public Long getId() {
@@ -87,9 +94,28 @@ public class User {
 		this.sessionToken = sessionToken;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", loggedOn=" + loggedOn + "]";
+	public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 }

@@ -29,15 +29,43 @@ public class UserService {
 		this.uRepo = repo;
 	}
 
-	public User registerUser(String username, String password) {
+	public User registerUser(String username, String password, String firstName, String lastName, Long roleId) {
 		try {
-			User userCreated = uRepo.save(new User(username, password));
+			User user = new User(username);
+			user.setPassword(password);
+			user.setFirstName(firstName);
+			user.setLastName(lastName);
+			user.setRoleId(roleId);
+
+			User userCreated = uRepo.save(user);
 //			return "User created successfully";
 			return userCreated;
 		} catch (Exception e) {
 			e.printStackTrace();
 //			return "Error: User was not created";
 			return null;
+		}
+	}
+
+	public String updateUser(String username, String password, String firstName, String lastName, Long roleId) {
+		try {
+			User loggedInUser = loginUsername(username, password);
+			if (loggedInUser == null) {
+				return "Invalid User Credentials.";
+			}
+			loggedInUser.setFirstName(firstName);
+			loggedInUser.setLastName(lastName);
+			loggedInUser.setRoleId(roleId);
+
+			User userCreated = uRepo.save(loggedInUser);
+			if (userCreated != null) {
+				return "User updated successfully";
+			} else {
+				return "Error: User was not updated";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error: User was not updated. Reason: " + e.getMessage();
 		}
 	}
 
