@@ -30,8 +30,13 @@ public class UserService {
 	}
 
 	public User registerUser(String username, String password, String firstName, String lastName, Long roleId) {
+		if (username != null) {
+			username = username.trim().toLowerCase();
+		}
+
 		try {
-			User user = new User(username);
+			User user = new User();
+			user.setUsername(username);
 			user.setPassword(password);
 			user.setFirstName(firstName);
 			user.setLastName(lastName);
@@ -48,6 +53,10 @@ public class UserService {
 	}
 
 	public String updateUser(String username, String password, String firstName, String lastName, Long roleId) {
+		if (username != null) {
+			username = username.trim().toLowerCase();
+		}
+
 		try {
 			User loggedInUser = loginUsername(username, password);
 			if (loggedInUser == null) {
@@ -70,6 +79,9 @@ public class UserService {
 	}
 
 	public User loginUsername(String username, String password) {
+		if (username != null) {
+			username = username.trim().toLowerCase();
+		}
 		try {
 			User loggedIn = uRepo.findUserByUsernameAndPassword(username, password);
 			if (loggedIn == null) {
@@ -91,6 +103,9 @@ public class UserService {
 	}
 
 	public boolean logoutUsername(String username) {
+		if (username != null) {
+			username = username.trim().toLowerCase();
+		}
 		try {
 			User loggedIn = uRepo.findUserByUsername(username);
 			if (loggedIn != null) {
@@ -119,6 +134,9 @@ public class UserService {
 	}
 
 	public User searchUsers(String username) {
+		if (username != null) {
+			username = username.trim().toLowerCase();
+		}
 		try {
 			return uRepo.findUserByUsername(username);
 		} catch (Exception e) {
@@ -127,8 +145,10 @@ public class UserService {
 		}
 	}
 
-
 	public User findUserSession(String username, String sessionToken) {
+		if (username != null) {
+			username = username.trim().toLowerCase();
+		}
 		try {
 			return uRepo.findUserByUsernameAndSessionToken(username, sessionToken);
 		} catch (Exception e) {
@@ -136,7 +156,7 @@ public class UserService {
 			return null;
 		}
 	}
-	
+
 	public List<User> getLoggedOnUsers() {
 		try {
 			return uRepo.findUserByLoggedOn(true);
