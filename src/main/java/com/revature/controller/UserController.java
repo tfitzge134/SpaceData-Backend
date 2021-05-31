@@ -72,7 +72,7 @@ public class UserController {
 		return new ResponseEntity<String>(result + "", HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/searchUser")
+	@PostMapping(value = "/search")
 	public ResponseEntity<User> searchUser(@RequestBody LinkedHashMap<String, String> uMap) {
 		User retrieved = uServ.searchUsers(uMap.get("username"));
 		return new ResponseEntity<User>(retrieved, HttpStatus.OK);
