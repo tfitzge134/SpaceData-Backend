@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import com.revature.service.UserService;
  * @author teresafitzgerald
  *
  */
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -45,7 +47,7 @@ public class UserController {
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/update")
+	@PostMapping(value = "/update-info")//update-info
 	public ResponseEntity<String> updateUser(@RequestBody LinkedHashMap<String, String> uMap) {
 		String roleIdStr = uMap.get("roleId");
 		long roleId;
@@ -72,7 +74,7 @@ public class UserController {
 		return new ResponseEntity<String>(result + "", HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/search")
+	@PostMapping(value = "/search-user")//search-user
 	public ResponseEntity<User> searchUser(@RequestBody LinkedHashMap<String, String> uMap) {
 		User sessionUser = uServ.findUserSession(uMap.get("loggedInUsername"), uMap.get("sessionToken"));
 		if (sessionUser == null) {
@@ -82,7 +84,7 @@ public class UserController {
 		return new ResponseEntity<User>(searchedUser, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/loggedOn")
+	@GetMapping(value = "/logged-On")//log-on
 	public ResponseEntity<List<User>> loggedOn() {
 		List<User> uList = uServ.getLoggedOnUsers();
 		return new ResponseEntity<List<User>>(uList, HttpStatus.OK);
